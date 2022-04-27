@@ -1,6 +1,8 @@
 package com.williamfranco.springdemocrudapi.ServicesTest;
 
+import com.williamfranco.springdemocrudapi.models.RolModel;
 import com.williamfranco.springdemocrudapi.models.UsuarioModel;
+import com.williamfranco.springdemocrudapi.repositories.RolRepository;
 import com.williamfranco.springdemocrudapi.repositories.UsuarioRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UsuarioServiceTest {
     @Autowired
     UsuarioRepository usuarioRepository;
+    @Autowired
+    RolRepository rolRepository;
 
     @Test
     public void testGuardarUsuario(){
@@ -36,6 +40,19 @@ public class UsuarioServiceTest {
     @Test
     public void testListarUsuarios(){
         List<UsuarioModel> usuarioModelList=(List<UsuarioModel>) usuarioRepository.findAll();
+        assertThat(usuarioModelList).size().isGreaterThan(0);
+    }
+
+    @Test
+    public void testInsertarRol(){
+        RolModel usuarioRol=new RolModel("Vendedor");
+        RolModel RolRegistrado = rolRepository.save(usuarioRol);
+        assertNotNull(RolRegistrado);
+    }
+
+    @Test
+    public void testListarRol(){
+        List<RolModel> usuarioModelList=(List<RolModel>) rolRepository.findAll();
         assertThat(usuarioModelList).size().isGreaterThan(0);
     }
 }

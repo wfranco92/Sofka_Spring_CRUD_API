@@ -1,7 +1,6 @@
 package com.williamfranco.springdemocrudapi.models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,7 +11,6 @@ public class UsuarioModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-
     private String nombre;
     private String email;
     private Integer prioridad;
@@ -22,15 +20,7 @@ public class UsuarioModel {
             joinColumns = {@JoinColumn(name = "fk_usuario", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name="fk_rol", nullable = false)}
     )
-    private List<RolModel> roles = new ArrayList<RolModel>();
-
-/*    public void addRol(RolModel rol){
-        if(this.roles == null){
-            this.roles = new ArrayList<>();
-        }
-
-        this.roles.add(rol);
-    }*/
+    private List<RolModel> roles;
 
     public void setPrioridad(Integer prioridad) {
         this.prioridad = prioridad;
@@ -59,6 +49,16 @@ public class UsuarioModel {
     public String getEmail() {
         return email;
     }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public List<RolModel> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RolModel> roles) {
+        this.roles = roles;
+    }
 
     public UsuarioModel(String nombre, String email, Integer prioridad) {
         this.nombre = nombre;
@@ -68,10 +68,6 @@ public class UsuarioModel {
 
     public UsuarioModel() {
 
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
 }
