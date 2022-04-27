@@ -1,6 +1,8 @@
 package com.williamfranco.springdemocrudapi.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -14,6 +16,21 @@ public class UsuarioModel {
     private String nombre;
     private String email;
     private Integer prioridad;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "usuario_rol",
+            joinColumns = {@JoinColumn(name = "fk_usuario", nullable = false)},
+            inverseJoinColumns = {@JoinColumn(name="fk_rol", nullable = false)}
+    )
+    private List<RolModel> roles = new ArrayList<RolModel>();
+
+/*    public void addRol(RolModel rol){
+        if(this.roles == null){
+            this.roles = new ArrayList<>();
+        }
+
+        this.roles.add(rol);
+    }*/
 
     public void setPrioridad(Integer prioridad) {
         this.prioridad = prioridad;

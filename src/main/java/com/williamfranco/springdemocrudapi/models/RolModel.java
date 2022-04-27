@@ -1,6 +1,7 @@
 package com.williamfranco.springdemocrudapi.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "rol")
@@ -19,6 +20,9 @@ public class RolModel {
         this.rol = rol;
         this.id_usuario = id_usuario;
     }
+/*
+    @ManyToMany(mappedBy = "rol")
+    private List<UsuarioModel> usuarios;*/
 
     public RolModel(){
 
