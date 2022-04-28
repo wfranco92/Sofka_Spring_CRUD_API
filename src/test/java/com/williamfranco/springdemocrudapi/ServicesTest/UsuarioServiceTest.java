@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.List;
 import java.util.Optional;
 
-import static  org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
@@ -50,5 +50,15 @@ public class UsuarioServiceTest {
 
         Optional<UsuarioModel> usuarioModelActualizado = usuarioRepository.findById(idBuscado);
         assertThat(usuarioModelActualizado.get().getNombre()).isEqualTo(nombre);
+    }
+
+    @Test
+    public void testEliminarUsuarioPorId() {
+        Long idBuscado = 1L;
+        boolean isEliminado = usuarioRepository.findById(idBuscado).isPresent();
+        usuarioRepository.deleteById(idBuscado);
+        boolean isNotEliminado = usuarioRepository.findById(idBuscado).isPresent();
+        assertTrue(isEliminado);
+        assertFalse(isNotEliminado);
     }
 }

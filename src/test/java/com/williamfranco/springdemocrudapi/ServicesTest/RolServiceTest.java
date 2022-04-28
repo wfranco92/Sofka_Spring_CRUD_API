@@ -1,7 +1,6 @@
 package com.williamfranco.springdemocrudapi.ServicesTest;
 
 import com.williamfranco.springdemocrudapi.models.RolModel;
-import com.williamfranco.springdemocrudapi.models.UsuarioModel;
 import com.williamfranco.springdemocrudapi.repositories.RolRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
@@ -44,6 +43,16 @@ public class RolServiceTest {
 
         Optional<RolModel> rolModelActualizado = rolRepository.findById(idBuscado);
         assertThat(rolModelActualizado.get().getRol()).isEqualTo(rol);
+    }
+
+    @Test
+    public void testEliminarUsuarioPorId() {
+        Long idBuscado = 1L;
+        boolean isEliminado = rolRepository.findById(idBuscado).isPresent();
+        rolRepository.deleteById(idBuscado);
+        boolean isNotEliminado = rolRepository.findById(idBuscado).isPresent();
+        assertTrue(isEliminado);
+        assertFalse(isNotEliminado);
     }
 
 }
