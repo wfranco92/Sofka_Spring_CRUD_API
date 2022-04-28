@@ -30,6 +30,21 @@ public class UsuarioController {
         return this.usuarioService.obtenerPorId(id);
     }
 
+    @PutMapping(path = "/{id}")
+    public UsuarioModel actualizarUsuarioPorID(@RequestBody UsuarioModel usuarioModel, @PathVariable("id") Long id){
+        return usuarioService.obtenerPorId(id)
+                .map(usuario -> {
+                    usuario.setNombre(usuarioModel.getNombre());
+                    usuario.setEmail(usuarioModel.getEmail());
+                    usuario.setPrioridad(usuarioModel.getPrioridad());
+                    return usuarioService.guardarUsuario(usuario);
+                })
+                .orElseGet(() -> {
+                    usuarioModel.setId(id);
+                    return usuarioService.guardarUsuario(usuarioModel);
+                });
+    }
+
     @GetMapping("/query")
     public ArrayList<UsuarioModel> obtenerUsuarioPorPrioridad(@RequestParam("prioridad") Integer prioridad) {
         return this.usuarioService.obtenerPorPrioridad(prioridad);
